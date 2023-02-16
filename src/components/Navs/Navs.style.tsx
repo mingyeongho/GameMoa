@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Palette } from "../../styles/Variable";
 
-export const NavsContainer = styled.div`
+export const NavsContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
