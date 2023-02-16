@@ -1,5 +1,7 @@
+import ChessContainer from "../components/Chess/ChessContainer";
+
 const Chess = () => {
-  return <div>Chess</div>;
+  return <ChessContainer />;
 };
 
 export default Chess;
