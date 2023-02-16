@@ -2,12 +2,7 @@ import Navs from "./components/Navs/Navs";
 import Router from "./Router/Router";
 
 function App() {
-  return (
-    <>
-      <Navs />
-      <Router />
-    </>
-  );
+  return <Router />;
 }
 
 export default App;
