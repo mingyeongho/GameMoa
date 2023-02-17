@@ -1,8 +1,13 @@
-import Navs from "./components/Navs/Navs";
+import Header from "./components/Header/Header";
 import Router from "./Router/Router";
 
 function App() {
-  return <Router />;
+  return (
+    <>
+      <Header />
+      <Router />
+    </>
+  );
 }
 
 export default App;
