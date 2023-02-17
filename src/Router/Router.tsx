@@ -5,6 +5,7 @@ import Index from "../pages";
 const Chess = lazy(() => import("../pages/chess"));
 const DavinciCode = lazy(() => import("../pages/davinciCode"));
 const SiginPage = lazy(() => import("../pages/signin"));
+const HalliGalli = lazy(() => import("../pages/halliGalli"));
 
 const Router = () => {
   return (
@@ -31,6 +32,14 @@ const Router = () => {
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <DavinciCode />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/halliGalli"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <HalliGalli />
           </Suspense>
         }
       />
