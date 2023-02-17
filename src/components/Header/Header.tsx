@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LOGIN, LOGO } from "../../utils/constant";
+import { SIGNIN, LOGO } from "../../utils/constant";
 import * as S from "./Header.style";
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
         <Link to={"/"}>{LOGO}</Link>
       </S.Logo>
       <S.Auth>
-        <Link to="/signin">{LOGIN}</Link>
+        <Link to="/signin">{SIGNIN}</Link>
       </S.Auth>
     </S.Header>
   );

@@ -1,7 +1,11 @@
 import Signin from "../components/Signin/Signin";
 
 const SigninPage = () => {
-  return <Signin />;
+  return (
+    <main>
+      <Signin />
+    </main>
+  );
 };
 
 export default SigninPage;

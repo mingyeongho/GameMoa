@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Index from "../pages";
+import SignupPage from "../pages/signup";
 
 const Chess = lazy(() => import("../pages/chess"));
 const DavinciCode = lazy(() => import("../pages/davinciCode"));
@@ -16,6 +17,14 @@ const Router = () => {
         element={
           <Suspense fallback={<div>Loading...</div>}>
             <SiginPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <SignupPage />
           </Suspense>
         }
       />

@@ -1,5 +1,7 @@
+import DavinciCodeContainer from "../components/DavinciCode/DavinciCodeContainer";
+
 const DavinciCode = () => {
-  return <div>DavinciCode</div>;
+  return <DavinciCodeContainer />;
 };
 
 export default DavinciCode;

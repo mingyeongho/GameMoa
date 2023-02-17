@@ -1,6 +1,8 @@
 export const LOGO = "게임모아";
 
-export const LOGIN = "로그인";
+export const SIGNIN = "로그인";
+
+export const SIGNUP = "회원가입";
 
 export const IndexGameContents = [
   {
