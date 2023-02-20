@@ -1,4 +1,7 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase/firebase";
 import { SIGNIN } from "../../../utils/constant";
 
 interface InputProp {
@@ -7,7 +10,7 @@ interface InputProp {
   name: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   id: string;
-  type: "text" | "password";
+  type: "text" | "password" | "email";
   autoComplete: "off" | "on";
 }
 
@@ -22,9 +25,10 @@ interface ButtonProp {
 }
 
 const useSignin = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState({ id: "", password: "" });
-  const { id, password } = inputs;
+  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const { email, password } = inputs;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -33,22 +37,26 @@ const useSignin = () => {
   const onSignin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("로그인 로직");
+
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => navigate("/"))
+      .catch(({ code, message }) => console.log(code, message));
+
     setInputs({
-      id: "",
+      email: "",
       password: "",
     });
     setIsLoading(false);
   };
 
-  const InputProps: { id: InputProp; password: InputProp } = {
-    id: {
-      value: id,
-      placeholder: "2자 이상 8자 이하 입력해주세요.",
+  const InputProps: { email: InputProp; password: InputProp } = {
+    email: {
+      value: email,
+      placeholder: "example@naver.com",
       onChange,
-      name: "id",
-      id: "id",
-      type: "text",
+      name: "email",
+      id: "email",
+      type: "email",
       autoComplete: "off",
     },
     password: {
@@ -62,10 +70,10 @@ const useSignin = () => {
     },
   };
 
-  const LabelProps: { id: LabelProp; password: LabelProp } = {
-    id: {
-      children: "ID",
-      htmlFor: "id",
+  const LabelProps: { email: LabelProp; password: LabelProp } = {
+    email: {
+      children: "E-mail",
+      htmlFor: "email",
     },
     password: {
       children: "Password",

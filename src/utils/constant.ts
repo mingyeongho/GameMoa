@@ -4,6 +4,8 @@ export const SIGNIN = "로그인";
 
 export const SIGNUP = "회원가입";
 
+export const LOGOUT = "로그아웃";
+
 export const IndexGameContents = [
   {
     name: "체스",

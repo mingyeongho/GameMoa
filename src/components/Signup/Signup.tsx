@@ -9,12 +9,20 @@ const Signup = () => {
     <S.SignupContainer>
       <S.Signup onSubmit={onSignup}>
         <S.InputContainer>
-          <S.Label {...LabelProps.id} />
-          <S.Input {...InputProps.id} />
+          <S.Label {...LabelProps.email} />
+          <S.Input {...InputProps.email} />
         </S.InputContainer>
         <S.InputContainer>
           <S.Label {...LabelProps.password} />
           <S.Input {...InputProps.password} />
+        </S.InputContainer>
+        <S.InputContainer>
+          <S.Label {...LabelProps.nickname} />
+          <S.Input {...InputProps.nickname} />
+        </S.InputContainer>
+        <S.InputContainer>
+          <S.Label {...LabelProps.profileColor} />
+          <S.Input {...InputProps.profileColor} />
         </S.InputContainer>
         <S.Button {...ButtonProps} />
       </S.Signup>

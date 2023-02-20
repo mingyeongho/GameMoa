@@ -1,5 +1,14 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { isIdValid, isPasswordValid } from "../../../function/valid";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../../../firebase/firebase";
+import {
+  isEmailValid,
+  isNicknameValid,
+  isPasswordValid,
+  isSignupValid,
+} from "../../../function/valid";
 import { SIGNUP } from "../../../utils/constant";
 
 interface InputProp {
@@ -8,7 +17,7 @@ interface InputProp {
   name: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   id: string;
-  type: "text" | "password";
+  type: "text" | "password" | "email" | "color";
   autoComplete: "off" | "on";
 }
 
@@ -20,12 +29,19 @@ interface LabelProp {
 interface ButtonProp {
   children: string;
   type: "submit";
+  disabled: boolean;
 }
 
 const useSignup = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState({ id: "", password: "" });
-  const { id, password } = inputs;
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    nickname: "",
+    profileColor: "#000000",
+  });
+  const { email, password, nickname, profileColor } = inputs;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,49 +50,106 @@ const useSignup = () => {
   const onSignup = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("회원가입 로직");
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        updateProfile(user, { displayName: nickname });
+
+        const userRef = doc(db, "Users", user.uid);
+        const payload = {
+          email,
+          password,
+          nickname,
+          profileColor,
+        };
+        setDoc(userRef, payload);
+        navigate("/signin");
+      })
+      .catch(({ code, message }) => {
+        console.log(code, message);
+      });
+
     setInputs({
-      id: "",
+      email: "",
       password: "",
+      nickname: "",
+      profileColor: "#000000",
     });
     setIsLoading(false);
   };
 
-  const InputProps: { id: InputProp; password: InputProp } = {
-    id: {
-      value: id,
-      placeholder: "2자 이상 8자 이하 입력해주세요.",
+  const InputProps: {
+    email: InputProp;
+    password: InputProp;
+    nickname: InputProp;
+    profileColor: InputProp;
+  } = {
+    email: {
+      value: email,
+      placeholder: "example@naver.com",
       onChange,
-      name: "id",
-      id: "id",
-      type: "text",
+      name: "email",
+      id: "email",
+      type: "email",
       autoComplete: "off",
     },
     password: {
       value: password,
-      placeholder: "8자 이상 16자 이하 입력해주세요.",
+      placeholder: "8~16자리",
       onChange,
       name: "password",
       id: "password",
       type: "password",
       autoComplete: "off",
     },
+    nickname: {
+      value: nickname,
+      placeholder: "2~8자리",
+      onChange,
+      name: "nickname",
+      id: "nickname",
+      type: "text",
+      autoComplete: "off",
+    },
+    profileColor: {
+      value: profileColor,
+      placeholder: "",
+      onChange,
+      name: "profileColor",
+      id: "profileColor",
+      type: "color",
+      autoComplete: "off",
+    },
   };
 
-  const LabelProps: { id: LabelProp; password: LabelProp } = {
-    id: {
-      children: isIdValid(id) ? "ID 😄" : "ID 😡",
-      htmlFor: "id",
+  const LabelProps: {
+    email: LabelProp;
+    password: LabelProp;
+    nickname: LabelProp;
+    profileColor: LabelProp;
+  } = {
+    email: {
+      children: isEmailValid(email) ? "E-mail 😄" : "E-mail 😡",
+      htmlFor: "email",
     },
     password: {
       children: isPasswordValid(password) ? "Password 😄" : "Password 😡",
       htmlFor: "password",
+    },
+    nickname: {
+      children: isNicknameValid(nickname) ? "Nickname 😄" : "Nickname 😡",
+      htmlFor: "nickname",
+    },
+    profileColor: {
+      children: `Profile Color: ${profileColor}`,
+      htmlFor: "profileColor",
     },
   };
 
   const ButtonProps: ButtonProp = {
     children: isLoading ? "Loading..." : SIGNUP,
     type: "submit",
+    disabled: !isSignupValid({ email, password, nickname }),
   };
 
   return { InputProps, LabelProps, ButtonProps, onSignup };

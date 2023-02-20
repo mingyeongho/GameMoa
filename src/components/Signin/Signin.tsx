@@ -10,8 +10,8 @@ const Signin = () => {
     <S.SigninContainer>
       <S.Signin onSubmit={onSignin}>
         <S.InputContainer>
-          <S.Label {...LabelProps.id} />
-          <S.Input {...InputProps.id} />
+          <S.Label {...LabelProps.email} />
+          <S.Input {...InputProps.email} />
         </S.InputContainer>
         <S.InputContainer>
           <S.Label {...LabelProps.password} />

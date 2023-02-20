@@ -8,7 +8,7 @@ export const SignupContainer = styled.div`
   justify-content: center;
   gap: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 260px;
+  width: 350px;
   padding: 40px;
   border-radius: 20px;
 `;
@@ -25,13 +25,16 @@ export const InputContainer = styled.div`
 `;
 
 export const Input = styled.input`
-  padding: 12px;
   border: 2px solid #ddd;
   outline: none;
   transition: border 0.2s;
 
   &:focus {
     border-color: ${Palette.primary};
+  }
+
+  &:not([type="color"]) {
+    padding: 12px;
   }
 `;
 
@@ -51,6 +54,11 @@ export const Button = styled.button`
   &:hover {
     background-color: ${Palette.primary_light};
     cursor: pointer;
+  }
+
+  &:disabled {
+    background-color: #555;
+    cursor: no-drop;
   }
 `;
 
