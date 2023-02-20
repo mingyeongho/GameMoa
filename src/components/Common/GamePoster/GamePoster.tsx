@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import * as S from "./Game.style";
+import * as S from "./GamePoster.style";
 
 interface GameProps {
   name: string;
@@ -7,7 +7,7 @@ interface GameProps {
   poster: string;
 }
 
-const Game = ({ name, path, poster }: GameProps) => {
+const GamePoster = ({ name, path, poster }: GameProps) => {
   return (
     <Link to={path}>
       <S.Game>
@@ -22,4 +22,4 @@ const Game = ({ name, path, poster }: GameProps) => {
   );
 };
 
-export default Game;
+export default GamePoster;

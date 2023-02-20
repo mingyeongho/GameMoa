@@ -1,12 +1,12 @@
 import { IndexGameContents } from "../../utils/constant";
-import Game from "../Game/Game";
+import GamePoster from "../Common/GamePoster/GamePoster";
 import * as S from "./Home.style";
 
 const Home = () => {
   return (
     <S.Home>
       {IndexGameContents.map((game) => (
-        <Game key={game.name} {...game} />
+        <GamePoster key={game.name} {...game} />
       ))}
     </S.Home>
   );
